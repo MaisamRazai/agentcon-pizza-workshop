@@ -11,12 +11,21 @@ project_client = AIProjectClient(
     credential=DefaultAzureCredential()
 )
 
+# Create the File Search tool
+vector_store_id = "vs_nX5vB4aLrnYAoJ7EfBoKvJDQ"  # Replace with your vector store ID
+file_search = FileSearchTool(vector_store_ids=[vector_store_id])
+
+# Create the toolset
+toolset = ToolSet()
+toolset.add(file_search)
+
 agent = project_client.agents.create_agent(
     model="gpt-4o",
     name="my-agent",
     instructions=open("instructions.txt").read(),
     top_p=0.7,
-    temperature=0.7
+    temperature=0.7,
+    toolset=toolset  # Add the toolset to the agent
 )
 print(f"Created agent with system prompt, ID: {agent.id}")
 
