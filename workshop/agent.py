@@ -13,9 +13,11 @@ project_client = AIProjectClient(
 
 agent = project_client.agents.create_agent(
     model="gpt-4o",
-    name="my-agent"
+    name="my-agent",
+    instructions="You are a helpful support assistant for Microsoft Foundry. Always provide concise, step-by-step answers. If you don't know the answer, say 'I don't know'. " \
+    "Use the tools available to you when necessary. You have to answer only related to Pizza ordering and menu.",
 )
-print(f"Created agent, ID: {agent.id}")
+print(f"Created agent with system prompt, ID: {agent.id}")
 
 thread = project_client.agents.threads.create()
 print(f"Created thread, ID: {thread.id}")
